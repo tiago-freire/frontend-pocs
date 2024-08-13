@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import CountryMedals from './CountryMedals.vue';
+import IconMedal from './icons/IconMedal.vue';
 
 type Country = {
   id: string
@@ -31,14 +32,23 @@ fetchMedalTable()
     <template #icon>
       <img :src="country.flag_url" class="flag" />
     </template>
-    <template #heading>{{ country.rank }}. {{ country.name }} - {{ country.continent }}</template>
-    Ouro: {{ country.gold_medals }} | Prata: {{ country.silver_medals }} | Bronze:
-    {{ country.bronze_medals }} | Total: {{ country.total_medals }}
+    <template #heading>{{ country.rank }}. {{ country.name }}</template>
+    <div class="medals">
+      <IconMedal :medal="'gold'" :total="country.gold_medals" />
+      <IconMedal :medal="'silver'" :total="country.silver_medals" />
+      <IconMedal :medal="'bronze'" :total="country.bronze_medals" />
+      <div>Total: {{ country.total_medals }}</div>
+    </div>
   </CountryMedals>
 </template>
 
 <style scoped>
 .flag {
   height: 100%;
+}
+.medals {
+  display: flex;
+  place-items: center;
+  gap: 1rem;
 }
 </style>
